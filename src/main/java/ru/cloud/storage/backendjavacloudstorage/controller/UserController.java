@@ -17,4 +17,10 @@ public class UserController {
    {
       return new ResponseEntity<>("Hello, World", HttpStatus.OK);
    }
+
+   @GetMapping("/hello_world2")
+   public ResponseEntity<String> test2()
+   {
+      return new ResponseEntity<>("Hello, World!!", HttpStatus.OK);
+   }
 }
