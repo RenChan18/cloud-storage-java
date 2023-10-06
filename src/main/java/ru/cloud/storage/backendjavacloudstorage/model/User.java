@@ -16,4 +16,29 @@ public class User {
     private String lastname;
     private String email;
     private String hashPassword;
+
+    public User(Long userId, String firstname, String lastname, String email, String hashPassword){
+        this.userId = userId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.hashPassword = hashPassword;
+    }
+
+    public static User createUser(Long userId, String firstname, String lastname, String email, String hashPassword) {
+        //
+        return new User(userId,firstname,lastname, email,  hashPassword);
+    }
+
+
+    public void deleteUser(){
+        this.userId = null;
+        this.firstname = null;
+        this.lastname = null;
+        this.email = null;
+        this.hashPassword = null;
+    }
+
+
+
 }
