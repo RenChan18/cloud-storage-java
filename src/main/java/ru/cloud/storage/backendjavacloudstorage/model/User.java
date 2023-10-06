@@ -1,9 +1,12 @@
 package ru.cloud.storage.backendjavacloudstorage.model;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 //@Builder ?
-//@Entity
-//@Table(name = "user")
+@Entity
+@Table(name = "user")
 public class User {
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
