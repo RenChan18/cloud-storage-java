@@ -1,44 +1,29 @@
 package ru.cloud.storage.backendjavacloudstorage.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-//@Builder ?
+
 @Entity
-@Table(name = "user")
+@Setter
+@Getter
+@Table(name = "users")
 public class User {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @Basic
+    @Column(name = "firstname")
     private String firstname;
+    @Basic
+    @Column(name = "lastname")
     private String lastname;
+    @Basic
+    @Column(name = "email")
     private String email;
+    @Basic
+    @Column(name = "hashpassword")
     private String hashPassword;
-
-    public User(Long userId, String firstname, String lastname, String email, String hashPassword){
-        this.userId = userId;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.hashPassword = hashPassword;
-    }
-
-    public static User createUser(Long userId, String firstname, String lastname, String email, String hashPassword) {
-        //
-        return new User(userId,firstname,lastname, email,  hashPassword);
-    }
-
-
-    public void deleteUser(){
-        this.userId = null;
-        this.firstname = null;
-        this.lastname = null;
-        this.email = null;
-        this.hashPassword = null;
-    }
-
-
-
 }
