@@ -21,7 +21,7 @@ public class User {
     @Column(name = "lastname")
     private String lastname;
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Basic
     @Column(name = "hashpassword")

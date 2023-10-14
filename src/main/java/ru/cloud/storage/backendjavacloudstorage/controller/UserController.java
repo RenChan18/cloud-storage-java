@@ -13,14 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
    @GetMapping("/hello_world")
-   public ResponseEntity<String> test()
-   {
-      return new ResponseEntity<>("Hello, World", HttpStatus.OK);
-   }
+   public ResponseEntity<String> helloWorld()   {      return new ResponseEntity<>("Hello, World", HttpStatus.OK); }
 
-   @GetMapping("/hello_world2")
-   public ResponseEntity<String> test2()
-   {
-      return new ResponseEntity<>("Hello, World!!", HttpStatus.OK);
-   }
 }
