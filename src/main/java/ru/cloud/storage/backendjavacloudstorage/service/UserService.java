@@ -1,51 +1,59 @@
 package ru.cloud.storage.backendjavacloudstorage.service;
 
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
+import ru.cloud.storage.backendjavacloudstorage.dto.request.UserRequest;
+import ru.cloud.storage.backendjavacloudstorage.dto.response.UserResponse;
+import ru.cloud.storage.backendjavacloudstorage.facade.UserFacade;
+import ru.cloud.storage.backendjavacloudstorage.model.User;
+import ru.cloud.storage.backendjavacloudstorage.repository.UserRepository;
 
 @Service
-
-
-public class UserService {
-
+@RequiredArgsConstructor
+public class UserService implements BaseService<UserRequest, UserResponse> {
+    private final UserFacade userFacade;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final UserRepository userRepository;
 
-    public UserService(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-    }
-
-    public Connection connect_to_db(String db_name, String user, String password){
-        Connection connect = null;
+    public Integer createUserWithJDBC(UserRequest userRequest) {
         try {
-            Class.forName("ru.cloud.storage.backendjavacloudstorage.model.User");
-            connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+ db_name, user, password);
-            if (connect!=null){
-                System.out.println("Connection established");
-            }
-            else {
-                System.out.println("Connection Failed");
-            }
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        return connect;
-    }
-
-    public Boolean createUser(String firstname, String lastname, String email, String hashpassword){
-        MapSqlParameterSource in = new MapSqlParameterSource();
-        in.addValue("firstname", firstname);
-        in.addValue("lastname", lastname);
-        in.addValue("email", email);
-        in.addValue("hashpassword", hashpassword);
-        try {
-            this.namedParameterJdbcTemplate.update("insert into users (firstname, lastname, email, hashpassword)  values (:firstname, :lastname, :email, :hashpassword);", in);
-            return true;
-        }catch(Exception e){
-            return  false;
+            return this.namedParameterJdbcTemplate.update("insert into users (firstname, lastname, email, hashpassword)  values (:firstname, :lastname, :email, :hashpassword);", userFacade.toCreateUser(userRequest));
+        } catch (Exception e) {
+            return 0;
         }
     }
+    public User createUserWithJPA(UserRequest userRequest) {
+        try {
+            return this.userRepository.save(userFacade.toUser(userRequest));
+        } catch (Exception e) {
+            return new User();
+        }
+    }
+
+
+    @Override
+    public UserResponse getReferenceById(String id) {
+        return null;
+    }
+
+    @Override
+    public UserResponse create(UserRequest request) {
+        return null;
+    }
+
+    @Override
+    public UserResponse update(UserRequest request) {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(String id) {
+        return null;
+    }
+
+    public UserResponse findUserByFirstName(String username) {
+        return userFacade.toResponse(userRepository.findUserByFirstName(username).orElseThrow(() -> new RuntimeException("Username not found with username " + username)));
+    }
+
 }

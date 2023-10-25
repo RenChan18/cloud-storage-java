@@ -1,39 +1,45 @@
 package ru.cloud.storage.backendjavacloudstorage.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.cloud.storage.backendjavacloudstorage.model.User;
+import ru.cloud.storage.backendjavacloudstorage.dto.request.UserRequest;
+import ru.cloud.storage.backendjavacloudstorage.dto.response.UserResponse;
 import ru.cloud.storage.backendjavacloudstorage.service.UserService;
 
 @RestController
 @CrossOrigin
 @RequestMapping("user")
-public class UserController {
-   private final UserService userService;
+public class UserController extends BaseController<UserService, UserRequest, UserResponse>{
+    @Autowired
+    private UserService userService;
 
-   public UserController(UserService userService) {
-      this.userService = userService;
+    public UserController(UserService service) {
+        super(service);
+    }
 
-   }
 
-   @GetMapping("/hello_world")
-   public ResponseEntity<String> helloWorld()   {return new ResponseEntity<>("Hello, World", HttpStatus.OK); }
+    @GetMapping("/hello_world")
+    public ResponseEntity<String> helloWorld() {
+        return new ResponseEntity<>("Hello, World", HttpStatus.OK);
+    }
 
-   @PostMapping("/createUser")
-   public ResponseEntity<String> createUser(@RequestParam("firstname") String firstname,
-                                          @RequestParam("lastname") String lastname,
-                                          @RequestParam("email") String email,
-                                          @RequestParam("hashpassword") String hashpassword,
-                                          HttpServletRequest httpServletRequest) throws Exception {
-         Boolean response = userService.createUser(firstname, lastname, email, hashpassword);
-         return new ResponseEntity<>("create user "+email, HttpStatus.OK);
-         //.ok(response);
-   }
+    @PostMapping("/createUserWithJDBC")
+    public ResponseEntity<String> createUserWithJDBC(
+            @RequestParam("user") UserRequest userRequest) {
+        return new ResponseEntity<>("Добавленно записей: " + userService.createUserWithJDBC(userRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/createUserWithJPA")
+    public ResponseEntity<String> createUserWithJPA(
+            @RequestParam("user") UserRequest userRequest) {
+        return new ResponseEntity<>("Добавленна запись: " + userService.createUserWithJPA(userRequest).toString(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{firstName}")
+    public ResponseEntity<UserResponse> findUserByFirstName(@PathVariable String firstName) {
+        return new ResponseEntity<>(userService.findUserByFirstName(firstName), HttpStatus.OK);
+    }
 }
-/*
-@PostMapping(path = "user", params={"userName"})
-public ResponseEntity<String> saveUser(@RequestParam("userName") String userName) {
-}*/
 

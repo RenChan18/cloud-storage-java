@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
 
 @Entity
 @Setter
@@ -16,21 +13,19 @@ import java.sql.DriverManager;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
     @Basic
     @Column(name = "firstname")
-    private String firstname;
+    private String firstName;
     @Basic
     @Column(name = "lastname")
-    private String lastname;
+    private String lastName;
     @Basic
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Basic
     @Column(name = "hashpassword")
     private String hashPassword;
-
-    //add psql/jdbc
 
 
 }
