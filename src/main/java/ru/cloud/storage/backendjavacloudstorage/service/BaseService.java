@@ -12,12 +12,10 @@ public interface BaseService<Q,A> {
 
     A getReferenceById(@PathVariable("id") String id);
 
-
     A create(@RequestBody Q request);
 
     A update(@RequestBody Q request);
 
     Boolean delete(@PathVariable("id") String id);
 
-//    List<A> findAll();
 }

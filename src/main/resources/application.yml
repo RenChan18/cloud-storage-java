@@ -1,9 +1,9 @@
 db:
-  name: cloud_storage
+  name: postgres
   setting: ?useSSL=false&useUnicode=yes&characterEncoding=UFT-8&allowPublicKeyRetrieval=true&amp;serverTimezone=UTC
 #  host: 192.168.110.6
   port: 5432
-#  password: 12345678
+  password: 12345
 
 app:
   port: 8080

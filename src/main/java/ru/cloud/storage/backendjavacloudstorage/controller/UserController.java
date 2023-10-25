@@ -27,13 +27,13 @@ public class UserController extends BaseController<UserService, UserRequest, Use
 
     @PostMapping("/createUserWithJDBC")
     public ResponseEntity<String> createUserWithJDBC(
-            @RequestParam("user") UserRequest userRequest) {
+            @RequestBody UserRequest userRequest) {
         return new ResponseEntity<>("Добавленно записей: " + userService.createUserWithJDBC(userRequest), HttpStatus.OK);
     }
 
     @PostMapping("/createUserWithJPA")
     public ResponseEntity<String> createUserWithJPA(
-            @RequestParam("user") UserRequest userRequest) {
+            @RequestBody UserRequest userRequest) {
         return new ResponseEntity<>("Добавленна запись: " + userService.createUserWithJPA(userRequest).toString(), HttpStatus.OK);
     }
 
