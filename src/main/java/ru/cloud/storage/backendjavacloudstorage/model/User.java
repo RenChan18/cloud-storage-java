@@ -2,8 +2,7 @@ package ru.cloud.storage.backendjavacloudstorage.model;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +12,7 @@ import java.sql.DriverManager;
 @Setter
 @Getter
 @Table(name = "users")
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class User {
     private String email;
     @Basic
     @Column(name = "hashpassword")
-    private String hashPassword;
+    private String hashpassword;
 
     //add psql/jdbc
 

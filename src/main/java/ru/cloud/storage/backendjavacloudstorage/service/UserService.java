@@ -3,6 +3,7 @@ package ru.cloud.storage.backendjavacloudstorage.service;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
+import ru.cloud.storage.backendjavacloudstorage.model.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,35 +18,39 @@ public class UserService {
     public UserService(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
+    public Boolean createUser(String firstname, String lastname, String email, String hashpassword) {
+        MapSqlParameterSource in = new MapSqlParameterSource()
+                .addValue("firstname", firstname)
+                .addValue("lastname", lastname)
+                .addValue("email", email)
+                .addValue("hashpassword", hashpassword);
 
-    public Connection connect_to_db(String db_name, String user, String password){
-        Connection connect = null;
         try {
-            Class.forName("ru.cloud.storage.backendjavacloudstorage.model.User");
-            connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+ db_name, user, password);
-            if (connect!=null){
-                System.out.println("Connection established");
-            }
-            else {
-                System.out.println("Connection Failed");
-            }
-        }catch (Exception e){
-            System.out.println(e);
+            this.namedParameterJdbcTemplate.update("insert into users (firstname, lastname, email, hashpassword)  " +
+                                                    "values (:firstname, :lastname, :email, :hashpassword);",
+                                                     in);
+            return true;
+        } catch (Exception exception) {
+            return false;
         }
-        return connect;
     }
 
-    public Boolean createUser(String firstname, String lastname, String email, String hashpassword){
-        MapSqlParameterSource in = new MapSqlParameterSource();
-        in.addValue("firstname", firstname);
-        in.addValue("lastname", lastname);
-        in.addValue("email", email);
-        in.addValue("hashpassword", hashpassword);
+    public Boolean updateUser(String currentEmailUser, User user) {
+        MapSqlParameterSource sqlSource = new MapSqlParameterSource()
+                .addValue("firstname", user.getFirstname())
+                .addValue("lastname", user.getLastname())
+                .addValue("email", user.getEmail())
+                .addValue("hashpassword", user.getHashpassword())
+                .addValue("currentEmailUser", currentEmailUser);
         try {
-            this.namedParameterJdbcTemplate.update("insert into users (firstname, lastname, email, hashpassword)  values (:firstname, :lastname, :email, :hashpassword);", in);
+            this.namedParameterJdbcTemplate.update("update into users (firstname, lastname, email, hashpassword" +
+                                                    "values (:firstname, :lastname, :email, :hashpassword)" +
+                                                    "where email = :currentEmailUser",
+                                                    sqlSource);
+
             return true;
-        }catch(Exception e){
-            return  false;
+        } catch (Exception exception) {
+            return false;
         }
     }
 }

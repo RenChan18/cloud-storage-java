@@ -15,25 +15,18 @@ public class UserController {
 
    public UserController(UserService userService) {
       this.userService = userService;
-
    }
 
    @GetMapping("/hello_world")
    public ResponseEntity<String> helloWorld()   {return new ResponseEntity<>("Hello, World", HttpStatus.OK); }
 
    @PostMapping("/createUser")
-   public ResponseEntity<String> createUser(@RequestParam("firstname") String firstname,
-                                          @RequestParam("lastname") String lastname,
-                                          @RequestParam("email") String email,
-                                          @RequestParam("hashpassword") String hashpassword,
-                                          HttpServletRequest httpServletRequest) throws Exception {
-         Boolean response = userService.createUser(firstname, lastname, email, hashpassword);
-         return new ResponseEntity<>("create user "+email, HttpStatus.OK);
-         //.ok(response);
+   public ResponseEntity<Boolean> createUser(@RequestBody User user) throws Exception {
+      return new ResponseEntity<>(
+              userService.createUser(user.getFirstname(),
+                      user.getLastname(),
+                      user.getEmail(),
+                      user.getHashpassword()),
+              HttpStatus.OK);
    }
 }
-/*
-@PostMapping(path = "user", params={"userName"})
-public ResponseEntity<String> saveUser(@RequestParam("userName") String userName) {
-}*/
-
