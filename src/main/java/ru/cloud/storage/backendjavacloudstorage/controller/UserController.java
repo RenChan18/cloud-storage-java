@@ -20,10 +20,21 @@ public class UserController {
    @GetMapping("/hello_world")
    public ResponseEntity<String> helloWorld()   {return new ResponseEntity<>("Hello, World", HttpStatus.OK); }
 
-   @PostMapping("/createUser")
+   @PostMapping("/create_user")
    public ResponseEntity<Boolean> createUser(@RequestBody User user) throws Exception {
       return new ResponseEntity<>(
               userService.createUser(user.getFirstname(),
+                      user.getLastname(),
+                      user.getEmail(),
+                      user.getHashpassword()),
+              HttpStatus.OK);
+   }
+
+   @PutMapping("/update_user")
+   public ResponseEntity<Boolean> updateUser(@PathVariable Long userId, @RequestBody User user) throws Exception {
+      return new ResponseEntity<>(
+              userService.updateUser(userId,
+                      user.getFirstname(),
                       user.getLastname(),
                       user.getEmail(),
                       user.getHashpassword()),
