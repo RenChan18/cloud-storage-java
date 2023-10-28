@@ -35,7 +35,7 @@ public class UserService {
         }
     }
 
-    public Boolean updateUser(String currentEmailUser, User user) {
+   /* public Boolean updateUser(String currentEmailUser, User user) {
         MapSqlParameterSource sqlSource = new MapSqlParameterSource()
                 .addValue("firstname", user.getFirstname())
                 .addValue("lastname", user.getLastname())
@@ -47,6 +47,25 @@ public class UserService {
                                                     "values (:firstname, :lastname, :email, :hashpassword)" +
                                                     "where email = :currentEmailUser",
                                                     sqlSource);
+
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
+    }*/
+
+    public Boolean updateUser(Long userId, String firstname, String lastname, String email, String hashpassword) {
+
+        MapSqlParameterSource sqlSource = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("firstname", firstname)
+                .addValue("lastname", lastname)
+                .addValue("email",email)
+                .addValue("hashpassword", hashpassword);
+        try {
+            this.namedParameterJdbcTemplate.update(
+                    "UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, hashpassword = :hashpassword WHERE id = :userId",
+                    sqlSource);
 
             return true;
         } catch (Exception exception) {
