@@ -1,9 +1,13 @@
 package ru.cloud.storage.backendjavacloudstorage.service;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import ru.cloud.storage.backendjavacloudstorage.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +18,8 @@ import java.sql.DriverManager;
 public class UserService {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public UserService(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -35,24 +41,6 @@ public class UserService {
         }
     }
 
-   /* public Boolean updateUser(String currentEmailUser, User user) {
-        MapSqlParameterSource sqlSource = new MapSqlParameterSource()
-                .addValue("firstname", user.getFirstname())
-                .addValue("lastname", user.getLastname())
-                .addValue("email", user.getEmail())
-                .addValue("hashpassword", user.getHashpassword())
-                .addValue("currentEmailUser", currentEmailUser);
-        try {
-            this.namedParameterJdbcTemplate.update("update into users (firstname, lastname, email, hashpassword" +
-                                                    "values (:firstname, :lastname, :email, :hashpassword)" +
-                                                    "where email = :currentEmailUser",
-                                                    sqlSource);
-
-            return true;
-        } catch (Exception exception) {
-            return false;
-        }
-    }*/
 
     public Boolean updateUser(Long userId, String firstname, String lastname, String email, String hashpassword) {
 
@@ -71,5 +59,25 @@ public class UserService {
         } catch (Exception exception) {
             return false;
         }
+    }
+
+    public Boolean deleteUser(Long userId) {
+            MapSqlParameterSource sqlSource = new MapSqlParameterSource()
+                    .addValue("userId", userId);
+
+            try {
+                this.namedParameterJdbcTemplate.update(
+                        "DELETE FROM users WHERE id = :userId",
+                        sqlSource);
+
+                return true;
+            } catch (Exception exception) {
+                return false;
+            }
+    }
+
+    public User getUser(Long userId) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{userId}, new BeanPropertyRowMapper<>(User.class));
     }
 }

@@ -25,12 +25,12 @@ public class UserController {
       return new ResponseEntity<>(
               userService.createUser(user.getFirstname(),
                       user.getLastname(),
-                      user.getEmail(),
+                      user.getEmail().toLowerCase(),
                       user.getHashpassword()),
               HttpStatus.OK);
    }
 
-   @PutMapping("/update_user")
+   @PostMapping("/update_user/{userId}")
    public ResponseEntity<Boolean> updateUser(@PathVariable Long userId, @RequestBody User user) throws Exception {
       return new ResponseEntity<>(
               userService.updateUser(userId,
@@ -40,4 +40,17 @@ public class UserController {
                       user.getHashpassword()),
               HttpStatus.OK);
    }
+
+   @PostMapping("/delete_user/{userId}")
+   public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) throws Exception {
+      return new ResponseEntity<>(
+              userService.deleteUser(userId),
+              HttpStatus.OK);
+   }
+
+   @GetMapping("/user/{userId}")
+   public User getUser(@PathVariable Long userId) {
+      return userService.getUser(userId);
+   }
+
 }
