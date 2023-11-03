@@ -3,7 +3,7 @@
 >[![Spring Boot](https://img.shields.io/badge/Spring_Boot-lime)](https://spring.io/projects/spring-boot)
 
 
-Based on the programming language Java and  an open-source Java framework used to create a Micro Service Spring Boot, a small backend server has been implemented that will allow register users and login in service. These data storages in the SQL storage of data -- PostgreSQL. User files are stored in the MongoDB database.
+Based on the programming language Java and  an open-source Java framework used to create a Micro Service Spring Boot, a small backend server has been implemented that will allow register users and login in service. These data storages in the SQL storage of data -- PostgreSQL. User files are stored in the MongoDB database which allows you to split files into small parts.
 The user has the ability to change the parameters of his account: first name, last name, email address and password. In the system, the unique identifier for the user is his email.
 
 ## Table of contents
