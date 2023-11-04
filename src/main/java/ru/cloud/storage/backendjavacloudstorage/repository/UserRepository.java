@@ -1,14 +1,21 @@
 package ru.cloud.storage.backendjavacloudstorage.repository;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.cloud.storage.backendjavacloudstorage.model.User;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-    //@Query("select * from users where email like concat('%',:email)")
-    //User userByEmail(@Param("email") String email);
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findUserByFirstName(String username);
+    Optional<User> findUserByEmail(String email);
+    Optional<User> findUserById(Long id);
+    List<User> findAllByIdIn(Collection<Long> id);
+    @Query("SELECT u FROM User u WHERE u.firstName LIKE ?1")
+    List<User> findAllByFirstNameLike(String firstName);
 }
