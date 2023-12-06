@@ -22,18 +22,18 @@ public class UserController {
    @GetMapping("/hello_world")
    public ResponseEntity<String> helloWorld()   {return new ResponseEntity<>("Hello, World", HttpStatus.OK); }
 
-   @PostMapping("/create_user")
+   @PostMapping("/create")
    public ResponseEntity<String> createUser(
            @RequestBody UserRequest userRequest) {
       return new ResponseEntity<>("Add record: " + userService.createUser(userRequest), HttpStatus.OK);
    }
 
-@PostMapping("/update_user/{userId}")
+@PostMapping("/update/{userId}")
    public ResponseEntity<String> updateUser( @RequestBody UserRequest userRequest) {
       return new ResponseEntity<>("Update record: " + userService.updateUser(userRequest), HttpStatus.OK);
    }
 
-   @PostMapping("/delete_user/{userId}")
+   @PostMapping("/delete/{userId}")
    public ResponseEntity<String> deleteUser(@RequestBody UserRequest userRequest) throws Exception {
       return new ResponseEntity<>("Delete record: " + userService.deleteUser(userRequest), HttpStatus.OK);
    }
@@ -44,3 +44,4 @@ public class UserController {
      return new ResponseEntity<>(userService.findUserByFirstName(firstName), HttpStatus.OK);
   }
 }
+

@@ -27,13 +27,6 @@ public class StructureElementService {
         }
     }
 
-    public void createFile(File file) {
-        fileRepository.save(file);
-    }
-
-    public void createFolder(Folder folder) {
-        folderRepository.save(folder);
-    }
 
     public boolean updateStructureElement(String id, StructureElement structureElement) {
         Optional<File> file = fileRepository.findById(id);
@@ -68,4 +61,16 @@ public class StructureElementService {
             }
         }
     }
+
+
+    public void createStructureElement(StructureElement structureElement) {
+    }
+    public void createFile(File file) {
+        fileRepository.save(file);
+    }
+
+    public void createFolder(Folder folder) {
+        folderRepository.save(folder);
+    }
+
 }
