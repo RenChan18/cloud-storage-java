@@ -21,7 +21,8 @@ CREATE TABLE directories (
                              id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                              name VARCHAR(255) NOT NULL,
                              directory_id INTEGER REFERENCES directories(directory_id) DEFAULT NULL,
-                             created_at TIMESTAMPTZ DEFAULT current_timestamp
+                             created_at TIMESTAMPTZ DEFAULT current_timestamp,
+                             edited_at TIMESTAMPTZ DEFAULT current_timestamp
 );
 CREATE TABLE files (
                        id UUID PRIMARY KEY,
@@ -30,6 +31,6 @@ CREATE TABLE files (
                        directory_id INTEGER REFERENCES directories(directory_id) DEFAULT NULL,
                        size INTEGER,
                        data TEXT,
-                       created_at TIMESTAMPTZ DEFAULT current_timestamp,
+                       upload_at TIMESTAMPTZ DEFAULT current_timestamp,
                        CONSTRAINT file_extension CHECK (position('.' in name) > 0)
 );

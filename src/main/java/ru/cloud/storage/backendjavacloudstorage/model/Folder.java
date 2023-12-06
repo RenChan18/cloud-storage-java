@@ -18,6 +18,10 @@ import java.util.Date;
 @Table(name = "folder")
 
 public class Folder extends StructureElement {
+    @Id
+    @Basic
+    @Column(name = "directory_id")
+    private String directory_id;
     @Basic
     @Column(name = "creation_date")
     private Date creationDate;

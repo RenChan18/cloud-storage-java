@@ -17,14 +17,18 @@ import lombok.Setter;
 
 
 public class StructureElement {
-    private String name;
-    private Long size;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Basic
     @Column(name = "id")
+    private String id;
 
-    private Long id;
+    @Basic
+    @Column(name = "name")
+    private String name;
 
+    @Basic
+    @Column(name = "size")
+    private Long size;
 
 }
