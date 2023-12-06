@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @Setter
 @Getter
 //@Builder
@@ -30,5 +30,6 @@ public class StructureElement {
     @Basic
     @Column(name = "size")
     private Long size;
+
 
 }
