@@ -1,8 +1,16 @@
 package ru.cloud.storage.backendjavacloudstorage.dto.request;
 
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class StructureElementRequest {
 
     private String name;
