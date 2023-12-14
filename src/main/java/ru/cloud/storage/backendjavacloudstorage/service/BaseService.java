@@ -16,6 +16,6 @@ public interface BaseService<Q,A> {
 
     A update(@RequestBody Q request);
 
-    Boolean delete(@PathVariable("id") String id);
+    Boolean delete(@RequestBody Q request);
 
 }

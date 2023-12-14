@@ -26,6 +26,4 @@ public class User {
     @Basic
     @Column(name = "hashpassword")
     private String hashPassword;
-
-
 }

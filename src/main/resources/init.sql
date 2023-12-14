@@ -17,20 +17,17 @@ $tolowercase_email$ LANGUAGE plpgsql;
 CREATE TRIGGER tolowercase_email BEFORE INSERT OR UPDATE ON users
     FOR EACH ROW EXECUTE PROCEDURE tolowercase_email();
 
-CREATE TABLE directories (
-                             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                             name VARCHAR(255) NOT NULL,
-                             directory_id INTEGER REFERENCES directories(directory_id) DEFAULT NULL,
-                             created_at TIMESTAMPTZ DEFAULT current_timestamp,
-                             edited_at TIMESTAMPTZ DEFAULT current_timestamp
+
+CREATE TYPE ItemType AS ENUM ('Folder', 'File');
+
+CREATE TABLE FileSystem (
+                            id SERIAL PRIMARY KEY,
+                            parent_id INTEGER,
+                            item_type ItemType,
+                            title VARCHAR(255) NOT NULL,
+                            icon VARCHAR(255),
+                            user_id INTEGER REFERENCES users(id),
+                            CONSTRAINT fk_parent_id FOREIGN KEY (parent_id) REFERENCES FileSystem (id) ON DELETE NO ACTION
 );
-CREATE TABLE files (
-                       id UUID PRIMARY KEY,
-                       name VARCHAR(255) NOT NULL,
-                       user_id INTEGER REFERENCES users(id),
-                       directory_id INTEGER REFERENCES directories(directory_id) DEFAULT NULL,
-                       size INTEGER,
-                       data TEXT,
-                       upload_at TIMESTAMPTZ DEFAULT current_timestamp,
-                       CONSTRAINT file_extension CHECK (position('.' in name) > 0)
-);
+
+

@@ -29,55 +29,49 @@ public class UserService implements BaseService<UserRequest, UserResponse> {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Integer createUser(UserRequest userRequest) {
-        try {
-
-            return this.namedParameterJdbcTemplate.update("insert into users (firstname, lastname, email, hashpassword)  values (:firstname, :lastname, :email, :hashpassword);", userFacade.toCreateUser(userRequest));
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-
-    public Integer updateUser(UserRequest userRequest) {
-        try {
-            return this.namedParameterJdbcTemplate.update("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, hashpassword = :hashpassword WHERE id = :userId"
-                    , userFacade.toUpdateUser(userRequest));
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-
-    public Integer deleteUser(UserRequest userRequest) {
-        try {
-            return this.namedParameterJdbcTemplate.update("DELETE FROM users WHERE id = :userId"
-                    , userFacade.toDeleteUser(userRequest));
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-
-
     @Override
     public UserResponse getReferenceById(String id) {
-        return null;
+        return userFacade.toResponse(userRepository.findUserById(Long.parseLong(id))
+                .orElseThrow(() -> new RuntimeException("Username not found with id " + id)));
     }
 
     @Override
-    public UserResponse create(UserRequest request) {
-        return null;
+    public UserResponse create(UserRequest userRequest) {
+        try {
+            if(0 != this.namedParameterJdbcTemplate.update("insert into users (firstname, lastname, email, hashpassword)  values (:firstname, :lastname, :email, :hashpassword);"
+                    , userFacade.toCreateUser(userRequest)))
+                return userFacade.toResponse(userFacade.toUser(userRequest));
+            else
+                return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public UserResponse update(UserRequest request) {
-        return null;
+    public UserResponse update(UserRequest userRequest) {
+        try {
+            if (0 != this.namedParameterJdbcTemplate.update("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, hashpassword = :hashpassword WHERE id = :userId"
+                    , userFacade.toUpdateUser(userRequest)))
+                return userFacade.toResponse(userFacade.toUser(userRequest));
+            else
+                return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public Boolean delete(String id) {
-        return null;
+    public Boolean delete(UserRequest userRequest) {
+        try {
+            if (0 != this.namedParameterJdbcTemplate.update("DELETE FROM users WHERE id = :userId"
+                    , userFacade.toDeleteUser(userRequest)))
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public UserResponse findUserByFirstName(String username) {

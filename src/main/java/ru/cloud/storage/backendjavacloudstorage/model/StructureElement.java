@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Setter
 @Getter
@@ -31,5 +33,15 @@ public class StructureElement {
     @Column(name = "size")
     private Long size;
 
+    @Basic
+    @Column(name = "user_id")
+    private String userId;
 
+    @Basic
+    @Column(name = "directory_id")
+    private String directoryId;
+
+    @Basic
+    @Column(name = "editing_date")
+    private Date editingDate;
 }

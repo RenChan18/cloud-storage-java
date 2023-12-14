@@ -1,21 +1,21 @@
-package ru.cloud.storage.backendjavacloudstorage.dto.response;
+package ru.cloud.storage.backendjavacloudstorage.dto.request;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 @Data
 @Builder
-public class StructureElementResponse implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class FileRequest {
     private String id;
     private String name;
     private Long size;
-    private String data;
-    private Date uploadedDate;
     private String user_id;
     private String directory_id;
-    private Date creationDate;
     private Date editingDate;
-
 }

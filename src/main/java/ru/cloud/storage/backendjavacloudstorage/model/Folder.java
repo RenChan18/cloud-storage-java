@@ -15,18 +15,8 @@ import java.util.Date;
 //@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "folder")
+@Table(name = "directories")
 
 public class Folder extends StructureElement {
-    @Id
-    @Basic
-    @Column(name = "directory_id")
-    private String directory_id;
-    @Basic
-    @Column(name = "creation_date")
-    private Date creationDate;
-    @Basic
-    @Column(name = "editing_date")
-    private Date editingDate;
 
 }

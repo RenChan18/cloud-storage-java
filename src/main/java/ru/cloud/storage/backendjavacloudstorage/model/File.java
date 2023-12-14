@@ -18,14 +18,5 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name = "files")
 public class File extends StructureElement {
-    @Basic
-    @Column(name = "data")
-    private String data;
-    @Basic
-    @Column(name = "uploadedDate")
-    private Date uploadedDate;
-    @Basic
-    @Column(name = "user_id")
-    private String user_id;
 
 }

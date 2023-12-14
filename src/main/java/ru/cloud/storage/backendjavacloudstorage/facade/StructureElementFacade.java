@@ -3,31 +3,30 @@ package ru.cloud.storage.backendjavacloudstorage.facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.cloud.storage.backendjavacloudstorage.dto.request.StructureElementRequest;
-import ru.cloud.storage.backendjavacloudstorage.dto.response.StructureElementResponse;
-import ru.cloud.storage.backendjavacloudstorage.model.File;
-import ru.cloud.storage.backendjavacloudstorage.model.Folder;
+import ru.cloud.storage.backendjavacloudstorage.dto.request.FileRequest;
+import ru.cloud.storage.backendjavacloudstorage.dto.response.FileResponse;
 import ru.cloud.storage.backendjavacloudstorage.model.StructureElement;
-import ru.cloud.storage.backendjavacloudstorage.service.StructureElementService;
-
+import ru.cloud.storage.backendjavacloudstorage.service.FileService;
+/*
 @Component
 @RequiredArgsConstructor
 public class StructureElementFacade {
 
-    public StructureElementResponse toResponse(StructureElement structureElement) {
-        return StructureElementResponse.builder()
+    public FileResponse toResponse(StructureElement structureElement) {
+        return FileResponse.builder()
                 .id(structureElement.getId())
                 .name(structureElement.getName())
                 .size(structureElement.getSize())
+                .data(structureElement.getData())
                 .build();
     }
 
 
     @Autowired
-    private StructureElementService structureElementService;
+    private FileService fileService;
 
     public String getStructureElementById(String id) {
-        StructureElement structureElement = structureElementService.getStructureElementById(id);
+        StructureElement structureElement = fileService.getStructureElementById(id);
         if (structureElement != null) {
             return "StructureElement found";
         } else {
@@ -35,15 +34,15 @@ public class StructureElementFacade {
         }
     }
 
-    public String createStructureElement(StructureElementRequest request) {
+    public String createStructureElement(FileRequest request) {
         StructureElement structureElement = convertRequestToStructureElement(request);
-        structureElementService.createStructureElement(structureElement);
+        fileService.createStructureElement(structureElement);
         return "StructureElement created successfully";
     }
 
-    public String updateStructureElement(String id, StructureElementRequest request) {
+    public String updateStructureElement(String id, FileRequest request) {
         StructureElement structureElement = convertRequestToStructureElement(request);
-        boolean updated = structureElementService.updateStructureElement(id, structureElement);
+        boolean updated = fileService.updateStructureElement(id, structureElement);
         if (updated) {
             return "StructureElement updated successfully";
         } else {
@@ -52,7 +51,7 @@ public class StructureElementFacade {
     }
 
     public String deleteStructureElement(String id) {
-        boolean deleted = structureElementService.deleteStructureElement(id);
+        boolean deleted = fileService.deleteStructureElement(id);
         if (deleted) {
             return "StructureElement deleted successfully";
         } else {
@@ -60,14 +59,14 @@ public class StructureElementFacade {
         }
     }
 
-    private StructureElement convertRequestToStructureElement(StructureElementRequest request) {
+    private StructureElement convertRequestToStructureElement(FileRequest request) {
         StructureElement structureElement = new StructureElement();
         structureElement.setName(request.getName());
         structureElement.setSize(request.getSize());
         structureElement.setData(request.getData());
         structureElement.setUploadedDate(request.getUploadedDate());
-        structureElement.setUser_id(request.getUser_id());
-        structureElement.setDirectory_id(request.getDirectory_id());
+        structureElement.setUserId(request.getUser_id());
+        structureElement.setDirectoryId(request.getDirectory_id());
         structureElement.setCreationDate(request.getCreationDate());
         structureElement.setEditingDate(request.getEditingDate());
         return structureElement;
@@ -76,3 +75,4 @@ public class StructureElementFacade {
 
 
 }
+*/
