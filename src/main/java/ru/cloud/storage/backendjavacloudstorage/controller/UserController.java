@@ -28,7 +28,7 @@ public class UserController {
       return new ResponseEntity<>("Add record: " + userService.createUser(userRequest), HttpStatus.OK);
    }
 
-@PostMapping("/update/{userId}")
+   @PostMapping("/update/{userId}")
    public ResponseEntity<String> updateUser( @RequestBody UserRequest userRequest) {
       return new ResponseEntity<>("Update record: " + userService.updateUser(userRequest), HttpStatus.OK);
    }
@@ -39,9 +39,8 @@ public class UserController {
    }
 
 
-  @GetMapping("/{firstName}")
-  public ResponseEntity<UserResponse> findUserByFirstName(@PathVariable String firstName) {
-     return new ResponseEntity<>(userService.findUserByFirstName(firstName), HttpStatus.OK);
-  }
+   @GetMapping("/{firstName}")
+   public ResponseEntity<UserResponse> findUserByFirstName(@PathVariable String firstName) {
+      return new ResponseEntity<>(userService.findUserByFirstName(firstName), HttpStatus.OK);
+   }
 }
-
